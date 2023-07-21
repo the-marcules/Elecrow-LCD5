@@ -1,13 +1,21 @@
 #!/bin/bash
+sudo cp /etc/X11/xorg.conf.d/40-libinput.conf.backup
 sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
+sudo cp /boot/config.txt /boot/config.backup
 sudo cp -rf ./boot/config-5.txt /boot/config.txt 
 if [ -b /dev/mmcblk0p7 ]; then
-sudo cp ./usr/cmdline.txt-noobs /boot/cmdline.txt
+    sudo cp /boot/cmdline.txt /boot/cmdline.txt.backup
+    sudo cp ./usr/cmdline.txt-noobs /boot/cmdline.txt
 else
-sudo cp ./usr/cmdline.txt /boot/
+    sudo cp ./usr/cmdline.txt /boot/
 fi
+
+sudo cp /etc/inittab /etc/initab.backup
 sudo cp ./usr/inittab /etc/
+
+sudo cp /usr/share/X11/xorg.conf.d/99-fbturbo.conf /usr/share/X11/xorg.conf.d/99-fbturbo.conf.backup
 sudo cp -rf ./usr/99-fbturbo.conf-HDMI /usr/share/X11/xorg.conf.d/99-fbturbo.conf 
+
 sudo mkdir /etc/X11/xorg.conf.d 
 sudo cp -rf ./usr/99-calibration.conf-5 /etc/X11/xorg.conf.d/99-calibration.conf 
 nodeplatform=`uname -n`
@@ -23,10 +31,12 @@ echo "reboot"
 else
 echo "need to update touch configuration"
 sudo apt-get install xserver-xorg-input-evdev
+sudo cp /usr/share/X11/xorg.conf.d/45-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf.backup
 sudo cp -rf /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
 echo "reboot"
 fi
 else
 echo "this is not raspberrypi kernel, no need to update touch configure, reboot"
 fi
-sudo reboot
+echo "skipping reboot 😝"
+# sudo reboot
