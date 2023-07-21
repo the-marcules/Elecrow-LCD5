@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo cp /etc/X11/xorg.conf.d/40-libinput.conf.backup
+sudo cp /etc/X11/xorg.conf.d/40-libinput.conf /etc/X11/xorg.conf.d/40-libinput.conf.backup
 sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
 sudo cp /boot/config.txt /boot/config.backup
 sudo cp -rf ./boot/config-5.txt /boot/config.txt 
